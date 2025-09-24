@@ -1,5 +1,6 @@
 import 'package:feszora/layout/app_theme.dart';
 import 'package:feszora/page/signin.dart';
+import 'package:feszora/page/signup.dart';
 import 'package:feszora/page/welcom.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       home: WelcomePage(),
       routes: {
         '/login' : (context) => const LoginPage(),
+        '/signup' : (context) => const SignupPage(),
       }
       
     );

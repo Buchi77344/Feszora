@@ -1,7 +1,11 @@
 import 'package:feszora/layout/color.dart';
+import 'package:feszora/layout/loading.dart';
+import 'package:feszora/layout/preloader.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:flutter_svg/flutter_svg.dart'; // ✅ for SVGs
+import 'package:flutter_svg/flutter_svg.dart'; 
+import 'package:feszora/page/signin.dart';
+import 'package:feszora/page/signup.dart';// ✅ for SVGs
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -11,13 +15,27 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+ bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    // Simulate API/data loading
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() => _loading = false);
+    });
+  }
   final PageController _controller = PageController();
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: SafeArea(
+      body: _loading
+          ? const Preloader()
+          :
+          SafeArea(
         child: Container(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -77,9 +95,9 @@ class _WelcomePageState extends State<WelcomePage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/signup");
-                    },
+                    onPressed: (){
+                navigateWithScale(context, const SignupPage());
+              },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       shape: RoundedRectangleBorder(
@@ -95,7 +113,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   const SizedBox(height: 10),
                             OutlinedButton(
               onPressed: () {
-                Navigator.pushNamed(context, "/login");
+                navigateWithScale(context, const LoginPage());
               },
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 15),
